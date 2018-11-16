@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>having fun with js</title>
+
+    <style>
+        #my-div {
+
+            background-color: yellow;
+            width: 250px;
+            height: 250px;
+            border: 1px solid red;
+            padding: 20px;
+            margin: 10px;
+        }
+
+        .hide-me {
+
+            visibility: hidden;
+            display: none;
+        }
+
+        .show-me {
+            visibility: visible;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>::: FUN JS :::</h1>
+    <p>TODO 1:
+        <ul>
+            <li>to bigin with use plain js</li>
+            <li>hide content of a given div at page load</li>
+            <li>make it visiable at a future time</li>
+            <li>write a cookie so not to show the content for n amount of time</li>
+        </ul>
+    </p>
+
+    <p>Dummy text BEFORE our div. my-div will show up 10 seconds after the document has finished loading.</p>
+
+    <div id="my-div">
+        <p>the content of the div will not show by default. We will show the contetn using js.</p>
+
+    </div>
+
+    <p>Dummy text AFTER our div. Kasd amet ea labore diam dolor est, et rebum sed nonumy ipsum sed et elitr amet diam,
+        takimata dolor lorem.</p>
+    <hr />
+ 
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) { 
+            console.log("my documnet has loaded.");
+            document.getElementById("my-div").classList.add("hide-me");
+            console.log("my-div is now hidden");
+            console.log("let's wait for 10 seconds -1000 ms = 1 sec-");
+            setTimeout(showMyDiv, 10000);
+            function showMyDiv() {
+                document.getElementById("my-div").classList.add("show-me");
+                console.log("my-div is now visibla");
+            }
+            console.log("now we want to set a cookie");
+            console.log("we make a function");
+            function setCookie(cookieName, cookieValue, cookieGoodForDays) {
+                var myDate = new Date();
+                myDate.setTime(myDate.getTime() + (cookieGoodForDays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + myDate.toUTCString();
+                document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+            }
+            setCookie("show-my-div", "yes", 1); 
+
+
+
+        });
+    </script>
+</body>
+
+</html>
