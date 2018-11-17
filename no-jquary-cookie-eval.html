@@ -9,11 +9,8 @@
 
     <style>
         #my-div {
-
-            background-color: yellow;
-            width: 250px;
-            height: 250px;
-            border: 1px solid red;
+ 
+            border: 10px solid brown;
             padding: 20px;
             margin: 10px;
         }
@@ -32,20 +29,28 @@
 </head>
 
 <body>
-    <h1>::: FUN JS :::</h1>
+    <h1>::: <a href="/">FUN JS</a> :::</h1>
     <p>TODO 1:
         <ul>
             <li>to bigin with use plain js</li>
             <li>hide content of a given div at page load</li>
-            <li>make it visiable at a future time</li>
-            <li>write a cookie so not to show the content for n amount of time</li>
+            <li>evaluate the existance of a cookie:</li>
+                <ul>
+                    <li>if cookie present: do nothing</li>
+                    <li>else:</li>  
+                        <ol>
+                            <li>make the div visable</li>
+                            <li>write a cookie so not to show the content for n amount of time</li>
+                        </ol>
+                </ul>
+            
         </ul>
     </p>
 
-    <p>Dummy text BEFORE our div. my-div will show up 10 seconds after the document has finished loading.</p>
+    <p>Dummy text BEFORE our div. my-div will show only if a cookie named chocolate-chip is not present.</p>
 
     <div id="my-div">
-        <p>the content of the div will not show by default. We will show the contetn using js.</p>
+        <p><img src="https://images.pexels.com/photos/230325/pexels-photo-230325.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=250&w=360"></p>
 
     </div>
 
@@ -58,53 +63,33 @@
     <script>
         document.addEventListener("DOMContentLoaded", function (event) {
             console.log("my documnet has loaded.");
-            console.log("check to see if a cookie called showed-div-today exists");
-            console.log("we make a function called getCookie");
-            function getCookie(cookieName) {
-                //cookies ae stored as name=value; to make our job easier we add = to the name of cookie that has been given to us
-                let cookieFullName = cookieName + "=";
-                var decodedCookie = decodeURIComponent(document.cookie); 
-                // decodeCookie gives us all cookies, separated by ; like "cookie1=foo; cookie2=bar; cookie3=buz" so we split it on ; and check to see if it contains the cookie we are looking for.
-                var currentCookie = decodedCookie.split(';'); 
-                console.log("currentCookie ia an array: " + currentCookie);
-                for (var i = 0; i < currentCookie.length; i++) {
-                    var c = currentCookie[i]; 
-                    //removing the leading black space
-                    while (c.charAt(0) == ' ') { 
-                        c = c.substring(1); 
-                    }
-                    if (c.indexOf(cookieName) == 0) {
-                        //we found cookie by name so return the value
-                        return c.substring(name.length, c.length);
-                    }
-                }
-                return "";
-            }
-            let isCookieSet = getCookie("showed-div-today");
-            console.log("cookie i am llooking for is " + isCookieSet);
-            /*
+            // first hide the div
             document.getElementById("my-div").classList.add("hide-me");
-            console.log("my-div is now hidden");
-            console.log("let's wait for 10 seconds -1000 ms = 1 sec-");
-            setTimeout(showMyDiv, 10000);
-            function showMyDiv() {
-                document.getElementById("my-div").classList.add("show-me");
-                console.log("my-div is now visibla");
+            console.log("check to see if a cookie called chocolate-chip exists");
+            console.log("we make a function called getCookie");
+            function getCookie(cookieName) {  
+                var decodedCookie = decodeURIComponent(document.cookie); 
+                // decodeCookie gives us all cookies "FOR THIS DOMAIN", separated by ; like "cookie1=foo; cookie2=bar; cookie3=buz" so we split it on ; and check to see if it contains the cookie we are looking for.
+                // we search for cookieName, if found return 0 else return -1
+                console.log("decodedCookie contains: " + decodedCookie);                 
+                return decodedCookie.indexOf(cookieName) ;  
             }
-            console.log("now we want to set a cookie");
-            console.log("we make a function called setCookie");*/
+            // now we use getCookie function
+            if ( getCookie("chocolate-chip") < 0 ){
+                // chocolate-chip was not set so show the div 
+                document.getElementById("my-div").classList.add("show-me");
+                // then set the cookie so content would not show up on page reload for one day
+                setCookie("chocolate-chip", "chipppps", 1);
+            }  
             function setCookie(cookieName, cookieValue, cookieGoodForDays) {
                 var myDate = new Date();
                 myDate.setTime(myDate.getTime() + (cookieGoodForDays * 24 * 60 * 60 * 1000));
                 var expires = "expires=" + myDate.toUTCString();
                 document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
             }
-            setCookie("show-my-div", "yes", 1);
-            setCookie("new-cookie", "yes", 1);
-            setCookie("anothe-cookie", "no", 1);
-            setCookie("foo", "", 1);
-            setCookie("bar", "chiken", 1);
-            setCookie("showed-div-today", "rice", 1);
+     
+
+            
             
 
 

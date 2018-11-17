@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>having fun with js</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <style>
+        #my-div {
+
+            border: 10px solid brown;
+            padding: 20px;
+            margin: 10px;
+        }
+
+        .hide-me {
+
+            visibility: hidden;
+            display: none;
+        }
+
+        .show-me {
+            visibility: visible;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>::: <a href="/">FUN JS</a> :::</h1>
+    <p>TODO 1:
+        <ul>
+            <li>JQUERY: hide content of a given div at page load</li>
+            <li>JQUERY: evaluate a cookie named icing:</li> 
+                <ul>
+                    <li>if icing exists, do nothing</li>
+                    <li>else</li>
+                        <ol>
+                            <li>show the div</li>
+                            <li>set icing so div does not display on page refresh for 1 day</li>
+                        </ol>
+                </ul>
+        </ul>
+    </p>
+
+    <p>Dummy text BEFORE our div. my-div will show up 100 seconds after the document has finished loading.</p>
+
+    <div id="my-div">
+        <p>the content of the div will not show by default. We will show the contetn using js.</p>
+
+    </div>
+
+    <p>Dummy text AFTER our div. Kasd amet ea labore diam dolor est, et rebum sed nonumy ipsum sed et elitr amet diam,
+        takimata dolor lorem.</p>
+    <hr />
+
+    <script> 
+        // i use "jQuery" instead of "$". in case this code was mixed with other js using other libraries on the same page; we don't want conflicts
+        jQuery(document).ready(function () {
+            console.log("my document has loaded!");
+            // first hide the div
+            jQuery( "#my-div" ).addClass( "hide-me" );
+            // check if icing exists 
+            // please notice that i am importing jquery.cookie.js in the head
+            if (jQuery.cookie('icing')) {
+                console.log("I found icing: " + jQuery.cookie('icing'));
+            }else{ 
+                // now show the div with a 10 sec delay
+                jQuery( "#my-div" ).delay(10000).queue(function() {
+                jQuery( "#my-div" ).addClass( "show-me" );
+                }); 
+                // Now set icing 
+                jQuery.cookie('icing', 'very-much', { path: '/', expires: 1440 }); 
+                // 24 x 60 = 1440 = one day
+            }       
+                 
+            
+        });
+    </script>
+
+</body>
+
+</html>
